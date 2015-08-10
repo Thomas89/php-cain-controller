@@ -1,0 +1,13 @@
+RewriteEngine on
+
+# for real
+# RewriteBase /
+
+# because i use localhost
+RewriteBase /rantai
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# get: rantairouting (see: lib/config.php)
+RewriteRule ^(.*)$ index.php?rantairouting=$1 [QSA,L]
