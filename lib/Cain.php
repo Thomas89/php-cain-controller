@@ -1,4 +1,15 @@
 <?php
+/**
+* Avz: CainController
+*
+* Dynamic Template/View/Whatever(cause I dont know. You'll understand when use this) Loader.
+*
+* PHP version 5.3.0 (mine)
+*
+* @author Anov Siradj (Mayendra Costanov) <anov.siradj22@(gmail|live).com>
+*
+*/
+
 // class ultraController extends Config {
 class cainController extends Config {
 	public $routeURL;
