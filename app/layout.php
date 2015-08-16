@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <title>this Doc.Title</title> -->
 	<title>Avz: CainController</title>
 	<style type="text/css">
 		#base {
@@ -11,11 +10,15 @@
 			position: relative;
 		}
 		pre.box {
-			/*width: 90%;*/
-			/*margin: 10px auto;*/
 			padding: 10px;
 			margin: 20px;
 			border: 2px solid #0099ff;
+		}
+		h1,h2,h3,h4 {
+			margin: 0px;
+			padding: 0px;
+			color: red;
+			display: inline-block;
 		}
 	</style>
 </head>
