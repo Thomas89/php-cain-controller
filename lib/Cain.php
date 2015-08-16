@@ -2,7 +2,7 @@
 /**
 * Avz: CainController
 *
-* Dynamic Template/View/Whatever(cause I dont know. You'll understand when use this) Loader.
+*  Dynamic Multi Template/View/Whatever(I dont know called what) Loader.
 *
 * PHP version 5.3.0 (mine)
 *
@@ -14,14 +14,14 @@
 // class ultraController extends Config {
 class cainController extends Config {
 	public $routeURL;
-	public $routeIndex;
+	public $routeIndex = 0;
 	public $routeChain = array();
 	public static $routeSubDefault = array();
 	public static $routeSubAllow = array();
 
 	private $hasBaseController = false;
 	function __construct() {
-		$this->routeIndex = 0;
+		// $this->routeIndex = 0;
 		// static::$routeBaseAllow[] = static::$routeBaseDefault;
 		if (empty($_GET[static::$routeSrc])) {
 			$this->routeURL = array(static::$routeBaseAllow[0]);
@@ -42,6 +42,8 @@ class cainController extends Config {
 			// json(static::$routeBaseAllow,"routeBaseAllow");
 			// e($tpl,"baseTPL");
 			include($tpl);
+		} else {
+			$this->errorView();
 		}
 	}
 	public function subView() {
@@ -51,7 +53,6 @@ class cainController extends Config {
 		$tplready = false;
 
 		if (!empty(static::$routeSubAllow[$index]) && count(static::$routeSubAllow[$index]) > 0) {
-
 			if ($this->hasRouteURL($index)) {
 				if (in_array($this->routeURL[$index],static::$routeSubAllow[$index][$this->routeChain[$oldIndex]])) {
 					$this->routeChain[] = $this->routeURL[$index];
@@ -123,11 +124,11 @@ class cainController extends Config {
 		include(static::$tplLayout);
 	}
 	public function hasRouteURL($i) {
+		$b = false;
 		if (!empty($this->routeURL[$i])) {
-			return true;
-		} else {
-			return false;
+			$b = true;
 		}
+		return $b;
 	}
 	public function errorView() {
 		if (!empty(static::$routeError)) {
