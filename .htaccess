@@ -4,7 +4,7 @@ RewriteEngine on
 # RewriteBase /
 
 # because i use localhost
-RewriteBase /rantai
+RewriteBase /php-cain-controller-master
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
