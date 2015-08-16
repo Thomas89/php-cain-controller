@@ -4,6 +4,7 @@ class utama extends cainController {
 	function __construct() {
 		static::$routeSubAllow[1] = array(__CLASS__=>array("beranda","tentang"));
 		static::$routeSubAllow[2] = array("beranda"=>array("profil","keluarga"));
+		static::$routeSubAllow[3] = array("profil"=>array("sejarah"));
 		// static::$routeSubAllow[2] = array(
 		// 	"beranda"=>array(
 		// 		"profil",
