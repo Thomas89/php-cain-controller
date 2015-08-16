@@ -7,6 +7,7 @@ abstract class Config {
 	public static $routeSrc = "rantairouting";
 	// public static $routeBaseDefault = "utama";
 	public static $routeBaseAllow = array("utama","portofolio","catatan");
+	public static $routeError = "app/template/other/error.php";
 	// public $mainRoute = array(
 	// 	"utama",
 	// 	"keluarga"
