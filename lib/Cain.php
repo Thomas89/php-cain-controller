@@ -7,6 +7,7 @@
 * PHP version 5.3.0 (mine)
 *
 * @author Anov Siradj (Mayendra Costanov) <anov.siradj22@(gmail|live).com>
+* @version 20150809 (initial release)
 *
 */
 
@@ -14,9 +15,9 @@
 class cainController extends Config {
 	public $routeURL;
 	public $routeIndex;
+	public $routeChain = array();
 	public static $routeSubDefault = array();
 	public static $routeSubAllow = array();
-	public $routeChain = array();
 
 	private $hasBaseController = false;
 	function __construct() {
@@ -37,7 +38,7 @@ class cainController extends Config {
 
 			e($this->routeIndex,"routeIndex");
 			json($this->routeChain,"routeChain");
-			json($this->routeURL,"routeURL(subView)");
+			json($this->routeURL,"routeURL(baseView)");
 			// json(static::$routeBaseAllow,"routeBaseAllow");
 			// e($tpl,"baseTPL");
 			include($tpl);
@@ -47,13 +48,30 @@ class cainController extends Config {
 		$oldIndex = $this->routeIndex;
 		$this->routeIndex++;
 		$index = $this->routeIndex;
+		$tplready = false;
 
-		if ($this->hasRouteURL($index)) {
-			if (in_array($this->routeURL[$index],static::$routeSubAllow[$index][$this->routeChain[$oldIndex]])) {
-				$this->routeChain[] = $this->routeURL[$index];
+		if (!empty(static::$routeSubAllow[$index]) && count(static::$routeSubAllow[$index]) > 0) {
+
+			if ($this->hasRouteURL($index)) {
+				if (in_array($this->routeURL[$index],static::$routeSubAllow[$index][$this->routeChain[$oldIndex]])) {
+					$this->routeChain[] = $this->routeURL[$index];
+					$tplready = true;
+				}
+			} else {
+				$this->routeChain[] = static::$routeSubAllow[$index][$this->routeChain[$oldIndex]][0];
+				$tplready = true;
+			}
+			if ($tplready) {
+				$subtpl = static::$tplDir.implode("-",$this->routeChain).".php";
+				e($this->routeIndex,"routeIndex");
+				json($this->routeChain,"routeChain");
+				e($subtpl, "subTPL");
+				include($subtpl);
+			} else {
+				$this->errorView();
 			}
 		} else {
-			$this->routeChain[] = static::$routeSubAllow[$index][$this->routeChain[$oldIndex]][0];
+			$this->errorView();
 		}
 
 		// if ($this->hasRouteURL($index)) {
@@ -75,12 +93,6 @@ class cainController extends Config {
 		// } else {
 
 		// }
-
-		$subtpl = static::$tplDir.implode("-",$this->routeChain).".php";
-		e($this->routeIndex,"routeIndex");
-		json($this->routeChain,"routeChain");
-		// e($subtpl, "subTPL");
-		include($subtpl);
 
 		// static::$routeSubAllow[$this->routeIndex][] = static::$routeSubDefault[$this->routeIndex];
 
@@ -115,6 +127,11 @@ class cainController extends Config {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	public function errorView() {
+		if (!empty(static::$routeError)) {
+			include(static::$routeError);
 		}
 	}
 }
